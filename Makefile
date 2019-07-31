@@ -8,6 +8,9 @@ k_submodule:=$(deps_dir)/k
 pandoc_tangle_submodule:=$(deps_dir)/pandoc-tangle
 k_bin:=$(k_submodule)/k-distribution/target/release/k/bin
 tangler:=$(pandoc_tangle_submodule)/tangle.lua
+timestamp_file=make.timestamp
+k_timestamp=$(k_submodule)/$(timestamp_file)
+pandoc_tangle_timestamp=$(pandoc_tangle_submodule)/$(timestamp_file)
 
 LUA_PATH=$(pandoc_tangle_submodule)/?.lua;;
 export LUA_PATH
@@ -23,12 +26,14 @@ all: build
 
 clean:
 	rm -rf $(build_dir)
+	rm -rf $(k_timestamp)
+	rm -rf $(pandoc_tangle_timestamp)
 	git submodule update --init --recursive
 
 # Build Dependencies (K Submodule)
 # --------------------------------
 
-deps: $(k_submodule)/make.timestamp $(pandoc_tangle_submodule)/make.timestamp ocaml-deps
+deps: $(k_timestamp) $(pandoc_tangle_timestamp) ocaml-deps
 
 $(k_submodule)/make.timestamp:
 	git submodule update --init --recursive
