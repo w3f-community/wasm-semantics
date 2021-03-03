@@ -51,7 +51,7 @@ run_krun() {
     ! $bug_report || additional_run_args+=(--haskell-backend-command "kore-exec --bug-report $bug_report_name")
 
     preprocess
-    krun --directory "$backend_dir" "$run_file" "${additional_run_args[@]}" "$@"
+    krun-legacy --directory "$backend_dir" "$run_file" "${additional_run_args[@]}" "$@"
 }
 
 run_kast() {
